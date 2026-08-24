@@ -41,12 +41,12 @@
       '<div><b>TREE CARE OF BUFFALO</b><span>The fast lane to the crew</span></div>'+
       '<button class="qc-close" type="button" aria-label="Close">×</button></div>'+
       '<div class="qc-body">'+
-      '<p class="qc-bubble">Tree trouble? Storm damage goes straight to the phone. Anything else, leave your number and we’ll call you back.</p>'+
+      '<p class="qc-bubble">Storm damage? Skip the typing and call. For everything else, leave a call-back number and we’ll ring you back within one business day.</p>'+
       '<a class="qc-call" href="tel:+17166018275"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 2Z"/></svg>Call (716) 601-8275</a>'+
       '<div class="qc-or">OR HAVE US CALL YOU</div>'+
       '<form class="qc-form" novalidate>'+
-      '<label>YOUR PHONE<input type="tel" name="phone" autocomplete="tel" required></label>'+
-      '<label>WHAT’S GOING ON WITH THE TREE?<textarea name="details"></textarea></label>'+
+      '<label>CALL-BACK NUMBER<input type="tel" name="phone" autocomplete="tel" placeholder="(716) 555-0123" required></label>'+
+      '<label>WHAT DO YOU NEED DONE?<textarea name="details" placeholder="Removal, trimming, stump work, storm cleanup, a leaning tree..."></textarea></label>'+
       '<button class="qc-send" type="submit">Have us call you</button>'+
       '</form>'+
       '<div class="qc-ok" role="status"></div>'+
