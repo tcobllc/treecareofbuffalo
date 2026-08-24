@@ -161,15 +161,18 @@ form.sent .form-ok{display:block}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:56px 0 42px;position:relative;z-index:2;background:var(--canvas)}
-.foot{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start;justify-content:space-between}
+.foot{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.35fr 1fr 1fr 1.1fr 1.25fr;gap:40px;align-items:start}
+@media (max-width:1020px){.foot{grid-template-columns:1fr 1fr 1fr}}
+@media (max-width:680px){.foot{grid-template-columns:1fr 1fr}}
+@media (max-width:430px){.foot{grid-template-columns:1fr}}
 .foot .col{display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--text-secondary)}
 .foot .col b{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:2px;color:var(--text-primary);margin-bottom:6px}
 .foot img{width:88px;height:88px}
 .foot a{color:var(--text-secondary);text-decoration:none}
 .foot a:hover{color:var(--text-primary)}
 .foot .tagline{font-size:14px;max-width:26ch}
-.foot .brandline{font-family:var(--display);font-size:18px;color:var(--text-primary)}
-.foot .brandline .of{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--accent)}
+.foot .brandline{display:block;font-family:var(--display);font-size:21px;line-height:1.1;color:var(--text-primary);margin-top:6px}
+.foot .brandline .of{display:block;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:2.5px;color:var(--accent);margin-top:5px}
 .legal{margin-top:36px;text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--text-secondary)}
 
 /* reduced motion: final states, drives stopped */
