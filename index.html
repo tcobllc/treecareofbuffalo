@@ -111,7 +111,7 @@ header.open .mobile-panel{display:flex}
 
 /* ============ hero: scrub stage ============ */
 .hero{position:relative;height:960vh;z-index:1}
-.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--canvas)}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--canvas)}
 .poster,.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .poster{background-size:cover;background-position:center}
 .stage video{opacity:0;transition:opacity .8s var(--ease);will-change:transform;transform:translateZ(0)}
@@ -179,11 +179,22 @@ header.open .mobile-panel{display:flex}
 .static-inner h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9vw,56px);line-height:1.14;text-wrap:balance}
 .static-inner p{margin:18px auto 28px;color:var(--text-primary);font-size:18px;max-width:34ch}
 .static-inner .btn{text-shadow:none}
-@media (max-width:720px){.hero{display:none}.static-hero{display:flex}}
-@media (orientation:portrait) and (max-width:1024px){.hero{display:none}.static-hero{display:flex}}
-@media (orientation:portrait) and (pointer:coarse){.hero{display:none}.static-hero{display:flex}}
 @media (orientation:landscape) and (pointer:coarse) and (max-height:560px){.hero{display:none}.static-hero{display:flex}}
 @media (prefers-reduced-motion:reduce){.hero{display:none}.static-hero{display:flex}}
+/* phones scrub too, with their own portrait video: longer runway for thumb pacing,
+   deeper scrims because the portrait crop puts brighter footage behind the words */
+@media (max-width:720px),((orientation:portrait) and (pointer:coarse)){
+  .hero{height:1000vh}
+  #band2{--scrima:.88}
+  #band3{--scrima:.82}
+  #band4{--scrima:.9}
+  #band5{--scrima:.88}
+  #band6{--scrima:.92}
+  /* narrow screens: text spans nearly full width, so the scrim must too */
+  .band::before,#band2::before,#band3::before,#band4::before,#band5::before{background:radial-gradient(ellipse 150% 64% at 50% 50%,rgba(8,12,8,var(--scrima,.62)) 0%,rgba(8,12,8,calc(var(--scrima,.62)*.8)) 58%,rgba(8,12,8,0) 92%)}
+  #band1::before{inset:-6%;background:radial-gradient(ellipse 160% 70% at 50% 34%,rgba(8,12,8,var(--scrima)) 0%,rgba(8,12,8,calc(var(--scrima)*.8)) 55%,rgba(8,12,8,0) 92%)}
+  #band6::before{background:radial-gradient(ellipse 160% 74% at 50% 36%,rgba(8,12,8,var(--scrima)) 0%,rgba(8,12,8,calc(var(--scrima)*.8)) 55%,rgba(8,12,8,0) 92%)}
+}
 
 /* ============ page shell ============ */
 main{position:relative;z-index:2;background:var(--canvas)}
@@ -652,8 +663,14 @@ const video=document.getElementById('heroVideo');
 const posterLayer=document.getElementById('poster');
 const heroEl=document.getElementById('hero');
 const ringEl=document.querySelector('.ring');
-const VIDEO_URL='assets/hero-scrub.mp4';
-const VIDEO_BYTES=16093177;
+/* phones get a dedicated portrait encode; desktops the full-frame one */
+const MOBILE_HERO='(max-width: 720px), ((orientation: portrait) and (pointer: coarse))';
+function heroVariant(){
+  return matchMedia(MOBILE_HERO).matches
+    ? {url:'assets/hero-scrub-mobile.mp4',bytes:4374168,poster:'assets/hero-poster-mobile.jpg'}
+    : {url:'assets/hero-scrub.mp4',bytes:16093177,poster:'assets/hero-poster.jpg'};
+}
+let heroSrc=null;
 
 /* band model: [a, b, peak scrim alpha handled in CSS] */
 const bands=[
@@ -664,6 +681,11 @@ const bands=[
   {el:document.getElementById('band5'),a:0.665,b:0.795,op:-1,k:-1},
   {el:document.getElementById('band6'),a:0.85,b:1.00,op:-1,k:-1}
 ];
+/* mobile band map: wider beats over the longer runway so thumb-flings can't skip them */
+if(matchMedia(MOBILE_HERO).matches){
+  const M=[[0,.16],[.185,.335],[.36,.51],[.53,.675],[.7,.83],[.86,1]];
+  bands.forEach((b,i)=>{b.a=M[i][0];b.b=M[i][1]});
+}
 let loadK=0,loadKDone=false;
 
 function heroProgress(){
@@ -752,11 +774,12 @@ let heroInited=false,blobStarted=false;
 function initHeroOnce(){
   if(heroInited)return;
   heroInited=true;
-  posterLayer.style.backgroundImage="url('assets/hero-poster.jpg')";
+  heroSrc=heroVariant();
+  posterLayer.style.backgroundImage="url('"+heroSrc.poster+"')";
   const img=new Image();
   img.onload=startBlobFetch;
   img.onerror=startBlobFetch;
-  img.src='assets/hero-poster.jpg';
+  img.src=heroSrc.poster;
   setTimeout(startBlobFetch,4000);
   /* one-time load ramp for band 1 */
   const t0=performance.now();
@@ -775,9 +798,9 @@ function startBlobFetch(){
 async function loadHeroBlob(){
   const ctrl=new AbortController();
   let watchdog=setTimeout(()=>ctrl.abort(),20000);
-  const res=await fetch(VIDEO_URL,{priority:'low',signal:ctrl.signal});
+  const res=await fetch(heroSrc.url,{priority:'low',signal:ctrl.signal});
   if(!res.ok)throw new Error('video http '+res.status);
-  const total=Number(res.headers.get('Content-Length'))||VIDEO_BYTES;
+  const total=Number(res.headers.get('Content-Length'))||heroSrc.bytes;
   const reader=res.body.getReader();
   const chunks=[];let got=0,lastRing=0;
   for(;;){
@@ -810,9 +833,6 @@ function failVideo(){
 
 /* the five gates, character for character identical to the CSS */
 const GATES=[
-  '(max-width: 720px)',
-  '(orientation: portrait) and (max-width: 1024px)',
-  '(orientation: portrait) and (pointer: coarse)',
   '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
   '(prefers-reduced-motion: reduce)'
 ];
