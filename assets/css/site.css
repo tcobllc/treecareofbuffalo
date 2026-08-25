@@ -1,4 +1,4 @@
-/* Tree Care of Buffalo — v2. Paper and ink. White is the material, green is the ink, gold is the signal. */
+/* Tree Care of Buffalo - v2. Paper and ink. White is the material, green is the ink, gold is the signal. */
 @layer reset, tokens, base, layout, components, utilities;
 
 @layer reset {
@@ -14,14 +14,14 @@
 
 @layer tokens {
   :root{
-    /* PAPER — the ground */
+    /* PAPER - the ground */
     --paper-0:#FFFFFF; --paper-50:#F8FAF8; --paper-100:#F1F5F1; --paper-200:#E7ECE8;
     --paper-300:#D7DEDA; --paper-400:#C1CAC4;
-    /* CANOPY — the ink */
+    /* CANOPY - the ink */
     --canopy-25:#F6FCF7; --canopy-50:#E9F6EB; --canopy-100:#D4EBD9; --canopy-200:#B3D6BF;
     --canopy-300:#91BBA2; --canopy-400:#6C9882; --canopy-500:#497362; --canopy-600:#30564A;
     --canopy-700:#1D3E35; --canopy-800:#122D27; --canopy-900:#0B211C; --canopy-950:#020E0B;
-    /* GOLD — the signal */
+    /* GOLD - the signal */
     --gold-50:#FFF5E1; --gold-100:#FFE9BE; --gold-200:#FFD689; --gold-300:#FFC450;
     --gold-400:#FFB610; --gold-500:#F3A600; --gold-600:#D38A00; --gold-700:#AA6A00;
     --gold-800:#7F4C00; --gold-900:#5A3405;
@@ -167,6 +167,7 @@
   .mobile-menu nav{display:flex;flex-direction:column;margin-top:var(--space-xl)}
   .mobile-menu nav a{font-family:var(--font-display);font-weight:600;font-size:var(--step-3);
     color:var(--paper-0);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--rule-inverse)}
+  .mobile-menu nav a[aria-current]{color:var(--gold-400)}
   .mobile-menu .menu-foot{margin-top:auto;padding-top:var(--space-xl)}
   .mobile-menu .menu-foot a.tel{display:block;font-size:var(--step-2);font-weight:600;
     color:var(--gold-400);text-decoration:none;font-variant-numeric:tabular-nums;margin-bottom:var(--space-m)}
@@ -345,11 +346,30 @@
   .field textarea{min-height:120px;resize:vertical}
   .field input::placeholder,.field textarea::placeholder{color:var(--canopy-200);opacity:1}
   .on-dark .field input:focus-visible,.on-dark .field textarea:focus-visible{outline-color:var(--gold-400)}
-  .field .err{display:none;font-size:var(--step--1);color:#FF8A80;font-weight:500}
-  .field.invalid .err{display:flex;gap:6px;align-items:center}
+  /* error row keeps a constant reserved height so the submit button never
+     shifts mid-click when a message appears or clears on blur */
+  .field .err{display:flex;gap:6px;align-items:center;min-height:24px;
+    font-size:var(--step--1);color:#FF8A80;font-weight:500}
   .field.invalid input,.field.invalid textarea{border-color:#FF8A80}
+  .field input[type="file"]{padding:9px 12px}
+  .field input[type="file"]::file-selector-button{background:rgba(255,255,255,.12);
+    color:var(--paper-0);border:1px solid rgba(255,255,255,.28);border-radius:var(--radius-s);
+    padding:8px 14px;margin-right:12px;font:inherit;font-size:var(--step--1);font-weight:600;
+    cursor:pointer}
+  .form-light .field input[type="file"]::file-selector-button{background:var(--paper-0);
+    color:var(--canopy-800);border-color:var(--rule-strong)}
   .field-check{display:flex;gap:12px;align-items:flex-start}
-  .field-check input{width:22px;height:22px;margin-top:2px;accent-color:var(--gold-400);flex:none}
+  .field-check input{appearance:none;-webkit-appearance:none;width:22px;height:22px;
+    margin-top:2px;flex:none;border:1px solid rgba(255,255,255,.35);
+    border-radius:var(--radius-s);background:rgba(255,255,255,.06);cursor:pointer;
+    display:grid;place-content:center}
+  .field-check input::before{content:"";width:12px;height:12px;scale:0;
+    background:var(--gold-400);
+    clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0,43% 62%);
+    transition:scale var(--dur-fast) var(--ease)}
+  .field-check input:checked::before{scale:1}
+  .form-light .field-check input{border-color:var(--rule-strong);background:var(--paper-100)}
+  .form-light .field-check input::before{background:var(--gold-600)}
   .field-check label{font-size:var(--step-0);font-weight:500;text-transform:none;letter-spacing:0}
   .urgent-note{display:none;font-size:var(--step--1);color:var(--canopy-100);
     border-left:2px solid var(--gold-400);padding-left:12px}
@@ -386,14 +406,16 @@
   .footer-cols h3{font-family:var(--font-text);font-size:var(--step--1);font-weight:600;
     text-transform:uppercase;letter-spacing:0.14em;color:var(--paper-0);margin-bottom:var(--space-s)}
   .footer-cols ul{display:grid;gap:10px;list-style:none;padding:0}
-  .footer-cols a{color:var(--text-inverse-muted);text-decoration:none}
+  /* padding + negative margin grows the tap target without changing row pitch */
+  .footer-cols a{color:var(--text-inverse-muted);text-decoration:none;
+    display:inline-block;padding:7px 0;margin:-7px 0}
   .footer-cols a:hover{color:var(--paper-0)}
   .footer-cols address{font-style:normal;display:grid;gap:10px}
   .footer-cols .tel{color:var(--gold-400);font-weight:600;font-variant-numeric:tabular-nums}
   .footer-bottom{border-top:1px solid var(--rule-inverse);margin-top:var(--space-2xl);
     padding-top:var(--space-l);display:flex;flex-wrap:wrap;gap:var(--space-s) var(--space-xl);
     justify-content:space-between;font-size:var(--step--1)}
-  .footer-bottom a{color:var(--text-inverse-muted)}
+  .footer-bottom a{color:var(--text-inverse-muted);display:inline-block;padding:11px 0;margin:-11px 0}
 
   /* ---------- sticky mobile bar ---------- */
   .sticky-bar{position:fixed;inset-inline:0;bottom:0;z-index:90;height:64px;

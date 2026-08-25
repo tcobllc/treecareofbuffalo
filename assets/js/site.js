@@ -1,4 +1,4 @@
-/* Tree Care of Buffalo — header condense, mobile menu, reveals, form, sticky bar. No dependencies. */
+/* Tree Care of Buffalo - header condense, mobile menu, reveals, form, sticky bar. No dependencies. */
 (function () {
   'use strict';
   var d = document;
@@ -73,21 +73,50 @@
     el.classList.add('in');
   }
   if (rvEls.length && 'IntersectionObserver' in window && !reduce.matches && !navigator.webdriver) {
-    /* content already in the first viewport must never wait on the observer */
-    var below = [];
+    var pending = [];
     var vh = window.innerHeight;
     rvEls.forEach(function (el) {
+      /* content already in the first viewport must never wait on the observer */
       if (el.getBoundingClientRect().top < vh) reveal(el);
-      else below.push(el);
+      else pending.push(el);
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         reveal(en.target);
         io.unobserve(en.target);
+        pending = pending.filter(function (el) { return el !== en.target; });
       });
     }, { rootMargin: '0px 0px -12% 0px' });
-    below.forEach(function (el) { io.observe(el); });
+    pending.forEach(function (el) { io.observe(el); });
+    /* fallback sweep: if the observer misses (background tab, odd embedder),
+       anything scrolled into view still reveals */
+    var sweeping = false;
+    function sweep() {
+      sweeping = false;
+      if (!pending.length) return;
+      var h = window.innerHeight;
+      pending = pending.filter(function (el) {
+        if (el.getBoundingClientRect().top < h) {
+          reveal(el);
+          io.unobserve(el);
+          return false;
+        }
+        return true;
+      });
+    }
+    window.addEventListener('scroll', function () {
+      if (!sweeping) { sweeping = true; requestAnimationFrame(sweep); }
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      if (!sweeping) { sweeping = true; requestAnimationFrame(sweep); }
+    }, { passive: true });
+    /* last-resort failsafe: catches scrolling that fires no events (some embedders);
+       stops itself once everything has revealed */
+    var tick = setInterval(function () {
+      if (!pending.length) { clearInterval(tick); return; }
+      sweep();
+    }, 1200);
   } else {
     rvEls.forEach(function (el) { el.classList.add('in'); el.style.transitionDelay = '0ms'; });
   }
@@ -117,7 +146,6 @@
   /* ---------- quote form ---------- */
   var form = d.querySelector('form.quote-form');
   if (form) {
-    var loadedAt = Date.now();
     var fields = {
       name: { test: function (v) { return v.trim().length >= 2; }, msg: 'Enter your name.' },
       phone: { test: function (v) { return v.replace(/\D/g, '').length >= 10; }, msg: 'Enter a phone number with area code.' },
@@ -149,9 +177,11 @@
     }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      /* spam gates: honeypot + minimum human time on page */
+      /* spam gate: honeypot only. The mailto flow needs no timing gate (a bot
+         "submitting" opens its own mail app, nothing reaches us).
+         CONTACT STEP: when a real form endpoint replaces mailto, add server-side
+         spam protection there instead of client-side gates that can eat real clicks. */
       if (form.querySelector('input[name="company"]').value !== '') return;
-      if (Date.now() - loadedAt < 3000) return;
       var allOk = true, firstBad = null;
       form.querySelectorAll('input[name], textarea[name]').forEach(function (input) {
         if (fields[input.name] && !validateField(input)) {
