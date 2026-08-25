@@ -75,9 +75,12 @@
   if (rvEls.length && 'IntersectionObserver' in window && !reduce.matches && !navigator.webdriver) {
     var pending = [];
     var vh = window.innerHeight;
-    rvEls.forEach(function (el) {
+    /* read all positions first, then write classes: avoids layout thrash */
+    var tops = [];
+    rvEls.forEach(function (el) { tops.push(el.getBoundingClientRect().top); });
+    rvEls.forEach(function (el, i) {
       /* content already in the first viewport must never wait on the observer */
-      if (el.getBoundingClientRect().top < vh) reveal(el);
+      if (tops[i] < vh) reveal(el);
       else pending.push(el);
     });
     var io = new IntersectionObserver(function (entries) {
