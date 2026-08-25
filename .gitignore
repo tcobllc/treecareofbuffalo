@@ -1,3 +1,0 @@
-# local deploy-tool state, never part of the site
-.netlify
-.wrangler
