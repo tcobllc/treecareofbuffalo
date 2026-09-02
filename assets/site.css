@@ -47,7 +47,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 /* header */
 header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(16,26,18,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(74,96,70,.35)}
 .navrow{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:28px;padding:14px 24px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
 .brand img{width:44px;height:44px}
 .brand-name{font-family:var(--display);font-size:17px;letter-spacing:.5px;line-height:1.15;color:var(--text-primary)}
 .brand-name small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:2.5px;color:var(--accent);font-weight:700}
@@ -68,7 +68,8 @@ header.open .mobile-panel{display:flex}
 .mobile-panel a{padding:14px 0;border-top:1px solid var(--line);font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:1px;text-decoration:none;color:var(--text-secondary)}
 .mobile-panel a:hover,.mobile-panel a[aria-current]{color:var(--accent)}
 @media (max-width:860px){nav a.hideable{display:none}.menu-btn{display:inline-flex;align-items:center}}
-@media (max-width:560px){.brand-name{display:none}.navrow{gap:14px;padding:12px 16px}.nav-cta{font-size:11px;padding:8px 14px;white-space:nowrap}}
+@media (max-width:560px){.brand-name{display:none}.navrow{gap:12px;padding:12px 14px}nav{gap:10px}.nav-cta{font-size:11px;padding:8px 12px;white-space:nowrap}}
+@media (max-width:400px){.nav-cta{font-size:10px;padding:8px 9px;letter-spacing:.5px}.menu-btn{padding:9px 10px}.nav-call{padding:8px 10px}.navrow{gap:8px}nav{gap:8px}}
 
 /* type + layout */
 main{position:relative;z-index:2}
@@ -218,3 +219,61 @@ footer{border-top:1px solid var(--line);padding:56px 0 42px;position:relative;z-
   .kerf path{stroke-dashoffset:0}
   .draw path{stroke-dashoffset:0}
 }
+
+/* ==== v1-revamp: subpage architecture, ported from site-v2 and reskinned ==== */
+.page-hero{position:relative;padding:180px 0 64px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 70% 60% at 80% 0%,rgba(232,150,58,.06),rgba(232,150,58,0) 60%),var(--canvas)}
+.crumbs{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:1px;color:var(--text-secondary);margin-bottom:18px}
+.crumbs a{color:var(--text-secondary);text-decoration:none}
+.crumbs a:hover{color:var(--accent)}
+.crumbs [aria-current]{color:var(--text-primary)}
+.prose{max-width:68ch}
+.prose p{margin-top:16px;color:var(--text-secondary);font-size:17px}
+.prose>p:first-child{margin-top:0;font-size:19px;color:var(--text-primary)}
+.prose h2{margin-top:44px;font-size:clamp(22px,2.6vw,30px);max-width:none}
+.prose ul{margin:16px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.prose li{position:relative;padding-left:26px;color:var(--text-secondary)}
+.prose li::before{content:"";position:absolute;left:2px;top:.5em;width:9px;height:9px;border-radius:50%;border:2px solid var(--accent)}
+.prose a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-muted)}
+.prose a:hover{color:var(--accent-hover)}
+.callout{background:var(--panel);border:1px solid var(--accent-muted);border-radius:14px;padding:22px 26px}
+.callout p{max-width:none;color:var(--text-secondary)}
+.callout strong{color:var(--text-primary)}
+.callout a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-muted)}
+.nowrap{white-space:nowrap}
+.page-fig{margin:36px 0 8px;border-radius:16px;overflow:hidden;border:1px solid var(--line-strong)}
+.page-fig img{width:100%;height:auto;display:block}
+
+/* estimate form, hardened: error rows reserve height so the button never shifts */
+.quote-form .field{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.quote-form .err{display:block;min-height:20px;font-size:13.5px;color:#e39a9a;font-family:var(--body);font-weight:400;letter-spacing:0;text-transform:none}
+.quote-form .field.invalid input,.quote-form .field.invalid textarea{border-color:#b4595d}
+.quote-form .form-foot{font-size:13.5px;color:var(--text-secondary);font-family:var(--body);font-weight:400;letter-spacing:0;text-transform:none}
+.hp-field{position:absolute;left:-9999px;top:auto}
+.field-check{flex-direction:row;align-items:center;gap:12px}
+.field-check input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+.field-check label{font-family:var(--body);font-weight:600;font-size:15px;letter-spacing:0;color:var(--text-primary)}
+.urgent-note{display:none;margin-top:10px;font-size:14px;color:var(--accent)}
+.urgent-note.show{display:block}
+.form-success{display:none;background:var(--panel-2);border:1px solid var(--accent-muted);border-radius:14px;padding:26px 28px}
+.form-success.show{display:block}
+.form-success h3{font-family:var(--body);font-weight:700;font-size:20px;color:var(--text-primary)}
+.form-success p{color:var(--text-secondary);font-size:15px}
+.form-success a{color:var(--accent)}
+
+/* sticky mobile call bar, appears past 40 percent depth */
+.sticky-bar{position:fixed;left:0;right:0;bottom:0;z-index:130;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-strong);border-top:1px solid var(--line-strong);transform:translateY(102%);transition:transform .35s var(--ease);box-shadow:0 -8px 30px rgba(8,12,8,.45)}
+.sticky-bar.show{transform:translateY(0)}
+.sticky-bar a{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 10px;font-weight:700;font-size:15px;text-decoration:none;min-height:52px}
+.bar-call{background:var(--accent);color:#1c1206}
+.bar-est{background:var(--panel-2);color:var(--text-primary)}
+@media (min-width:861px){.sticky-bar{display:none}}
+@media (max-width:860px){.qc-fab{bottom:88px}.qc-panel{bottom:154px}}
+
+/* logo presence: 64 desktop, 52 mobile */
+.brand img{width:64px;height:64px}
+@media (max-width:560px){.brand img{width:52px;height:52px}}
+
+/* services.html card title links */
+.svc h3 a{color:inherit;text-decoration:none;transition:color .25s var(--ease)}
+.svc h3 a:hover{color:var(--accent)}
+.svc h3 a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
