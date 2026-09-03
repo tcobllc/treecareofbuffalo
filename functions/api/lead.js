@@ -19,8 +19,12 @@
  *      existing success/failure UI. Keep mailto as the catch fallback.
  */
 
-const DEST = "business@treecareofbuffalo.com";
-const FROM = "onboarding@resend.dev"; // switch to leads@treecareofbuffalo.com after domain verify
+/* Resend's unverified tier only delivers to the account owner's address.
+   OCTOBER STEP: after the domain moves to Cloudflare DNS, verify it at
+   resend.com/domains, then set DEST to business@treecareofbuffalo.com and
+   FROM to leads@treecareofbuffalo.com. */
+const DEST = "akimbochop13@gmail.com";
+const FROM = "onboarding@resend.dev";
 
 /* The live site is served by GitHub Pages at treecareofbuffalo.com, so the form
    POSTs here cross-origin. Allow the production hosts plus the Cloudflare branch
