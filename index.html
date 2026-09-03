@@ -1173,7 +1173,8 @@ if(matchMedia('(prefers-reduced-motion: reduce)').matches)pinToFinalStates();
     }
     ok.style.display='';
     const body=encodeURIComponent('Please call me back.\nPhone: '+phone+'\n\nAbout the tree:\n'+(f.get('details')||''));
-    location.href='mailto:business@treecareofbuffalo.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
+    /* TEMPORARY compose target until business@ receives (Workspace, ~Sep 4) */
+    location.href='mailto:akimbochop13@gmail.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
     panel.classList.add('sent');
     ok.textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
   });

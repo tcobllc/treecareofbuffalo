@@ -122,7 +122,8 @@
       }
       ok.style.display='';
       var body=encodeURIComponent('Please call me back.\nPhone: '+phone+'\n\nAbout the tree:\n'+(f.get('details')||''));
-      location.href='mailto:business@treecareofbuffalo.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
+      /* TEMPORARY compose target until business@ receives (Workspace, ~Sep 4) */
+      location.href='mailto:akimbochop13@gmail.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
       panel.classList.add('sent');
       ok.textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
       track('form_submit',{source:'quick_contact'});
@@ -279,7 +280,8 @@
           '(If you have photos of the tree, attach them to this email before sending.)'
         ].join('\n');
         var subject=(isUrgent?'URGENT tree work request':'Free estimate request')+' from '+v('name');
-        window.location.href='mailto:business@treecareofbuffalo.com?subject='+
+        /* TEMPORARY compose target until business@ receives (Workspace, ~Sep 4) */
+        window.location.href='mailto:akimbochop13@gmail.com?subject='+
           encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
         track('form_submit',{urgent:!!isUrgent,path:'mailto'});
         finish(false);
