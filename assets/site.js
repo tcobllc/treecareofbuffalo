@@ -112,10 +112,19 @@
     panel.querySelector('.qc-form').addEventListener('submit',function(e){
       e.preventDefault();
       var f=new FormData(this);
-      var body=encodeURIComponent('Please call me back.\nPhone: '+(f.get('phone')||'')+'\n\nAbout the tree:\n'+(f.get('details')||''));
+      var phone=(f.get('phone')||'').trim();
+      var ok=panel.querySelector('.qc-ok');
+      if(phone.replace(/\D/g,'').length<7){
+        ok.textContent='Add a call-back number first, or just call (716) 601-8275.';
+        ok.style.display='block';
+        this.querySelector('input[name="phone"]').focus();
+        return;
+      }
+      ok.style.display='';
+      var body=encodeURIComponent('Please call me back.\nPhone: '+phone+'\n\nAbout the tree:\n'+(f.get('details')||''));
       location.href='mailto:business@treecareofbuffalo.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
       panel.classList.add('sent');
-      panel.querySelector('.qc-ok').textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
+      ok.textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
       track('form_submit',{source:'quick_contact'});
     });
   })();
@@ -232,7 +241,10 @@
       /* spam gate: honeypot only. CONTACT STEP: when a real form endpoint replaces
          mailto, add server-side spam protection there, never client-side gates
          that can eat real clicks. */
-      if(form.querySelector('input[name="company"]').value!=='')return;
+      /* the trap field has a nonsense name so browser autofill never fills it
+         and silently eats a real submission */
+      var trap=form.querySelector('input[name="tcob-trap"]');
+      if(trap&&trap.value!=='')return;
       var allOk=true,firstBad=null;
       form.querySelectorAll('input[name], textarea[name]').forEach(function(input){
         if(fields[input.name]&&!validateField(input)){

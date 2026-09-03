@@ -6,6 +6,8 @@
 <title>Tree Service in Buffalo, NY | Tree Care of Buffalo</title>
 <meta name="description" content="Tree trimming, removal, stump grinding, land clearing, and storm work in Buffalo and Western New York. Fully insured, free written estimates, ten years and counting.">
 <meta name="theme-color" content="#101a12">
+<link rel="canonical" href="https://treecareofbuffalo.com/">
+<script>document.documentElement.className+=' js';</script>
 <!-- DEPLOY STEP: patch og:url and og:image with the live absolute URL before zipping -->
 <meta property="og:title" content="Tree Care of Buffalo">
 <meta property="og:description" content="Buffalo's trees, in careful hands. Fully insured, free written estimates.">
@@ -145,7 +147,7 @@ header.open .mobile-panel{display:flex}
 @media (max-width:400px){.nav-cta{font-size:10px;padding:8px 9px;letter-spacing:.5px}.menu-btn{padding:9px 10px}.nav-call{padding:8px 10px}.navrow{gap:8px}nav{gap:8px}}
 
 /* ============ hero: scrub stage ============ */
-.hero{position:relative;height:960vh;z-index:1}
+.hero{position:relative;height:560vh;z-index:1}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--canvas)}
 .poster,.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .poster{background-size:cover;background-position:center}
@@ -158,6 +160,8 @@ header.open .mobile-panel{display:flex}
 .cue svg{margin:6px auto 0;width:16px;height:16px;animation:cuebob 2.6s var(--ease-soft) -1s infinite}
 @keyframes cuebob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 @media (max-height:560px){.cue{display:none}}
+.skip-intro{position:absolute;left:22px;bottom:22px;z-index:5;background:rgba(12,18,12,.55);border:1px solid rgba(122,90,40,.4);border-radius:10px;color:var(--text-secondary);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:2px;padding:10px 14px;min-height:40px;cursor:pointer;backdrop-filter:blur(10px);opacity:.85;transition:color .25s var(--ease),border-color .25s var(--ease)}
+.skip-intro:hover{color:var(--text-primary);border-color:var(--accent-muted)}
 
 /* caption bands */
 .band{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:19vh 6vw 0;text-align:center;opacity:0;pointer-events:none;text-shadow:var(--tshadow)}
@@ -187,6 +191,7 @@ header.open .mobile-panel{display:flex}
 .assure .sharp{opacity:var(--kr,1)}
 .btn{display:inline-block;background:var(--accent);color:#1c1206;font-family:var(--body);font-weight:700;font-size:17px;text-decoration:none;padding:15px 30px;border-radius:10px;border:0;cursor:pointer;position:relative;transition:background .25s var(--ease),transform .25s var(--ease)}
 .btn:hover{background:var(--accent-hover);transform:translateY(-2px)}
+.btn:active,.nav-cta:active,.qc-send:active,.bar-call:active,.bar-est:active,.skip-intro:active{transform:translateY(1px) scale(.98);transition-duration:.08s}
 .btn::after{content:"";position:absolute;inset:-6px;border-radius:14px;box-shadow:0 0 34px rgba(232,150,58,.5);opacity:0;pointer-events:none}
 .glowon .btn::after{animation:ctaglow 5.2s var(--ease-soft) -1.4s infinite}
 @keyframes ctaglow{0%,100%{opacity:0}50%{opacity:.65}}
@@ -219,7 +224,7 @@ header.open .mobile-panel{display:flex}
 /* phones scrub too, with their own portrait video: longer runway for thumb pacing,
    deeper scrims because the portrait crop puts brighter footage behind the words */
 @media (max-width:720px),((orientation:portrait) and (pointer:coarse)){
-  .hero{height:1000vh}
+  .hero{height:640vh}
   #band2{--scrima:.88}
   #band3{--scrima:.82}
   #band4{--scrima:.9}
@@ -280,6 +285,9 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.6vw,42px);l
 .reveal.in .part:nth-child(6){transition-delay:.4s}
 .reveal.in .part:nth-child(7){transition-delay:.48s}
 .reveal.in.done .part:nth-child(n){transition-delay:0s}
+html:not(.js) .reveal .part{opacity:1;transform:none}
+html:not(.js) .kerf path{stroke-dashoffset:0}
+html:not(.js) .stat{opacity:1;transform:none}
 
 /* experience: count the rings */
 .exp{background:var(--panel);border-block:1px solid var(--line)}
@@ -292,7 +300,7 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.6vw,42px);l
 .ringwood [data-ringpath]{fill:none;stroke:currentColor;stroke-width:1.6;opacity:.9}
 .ringhint{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--text-secondary)}
 .stats{display:flex;flex-direction:column;gap:18px;margin-top:34px}
-.stat{display:flex;gap:16px;align-items:baseline;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:18px 22px;opacity:.35;transform:translateX(10px);transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .5s var(--ease)}
+.stat{display:flex;gap:16px;align-items:baseline;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:18px 22px;opacity:.62;transform:translateX(10px);transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .5s var(--ease)}
 .stat.lit{opacity:1;transform:translateX(0);border-color:var(--accent-muted)}
 .stat b{font-family:var(--display);font-weight:400;font-size:20px;color:var(--accent);white-space:nowrap}
 .stat span{color:var(--text-secondary);font-size:15px}
@@ -336,7 +344,7 @@ form{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
 label{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:2px;color:var(--text-secondary)}
 label.full{grid-column:1/-1}
 input,textarea{background:var(--canvas);border:1px solid var(--line-strong);border-radius:10px;color:var(--text-primary);font-family:var(--body);font-size:16px;padding:13px 15px;transition:border-color .25s var(--ease)}
-input::placeholder,textarea::placeholder{color:var(--text-secondary);opacity:.55}
+input::placeholder,textarea::placeholder{color:var(--text-secondary);opacity:.62}
 textarea{min-height:120px;resize:vertical}
 .form-foot{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:6px}
 .form-note{font-size:14px;color:var(--text-secondary);max-width:40ch}
@@ -485,6 +493,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 42px;position:relative;z-
 
     <svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126" style="stroke-dashoffset:var(--ld,126)"/></svg>
     <div class="cue" aria-hidden="true">SCROLL<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+    <button class="skip-intro" type="button" aria-label="Skip the intro and jump to the page">SKIP INTRO</button>
   </div>
 </div>
 
@@ -852,6 +861,11 @@ function onScroll(){
 }
 new IntersectionObserver(es=>{heroOnScreen=es[0].isIntersecting},{rootMargin:'60px'}).observe(heroEl);
 
+/* the escape hatch: fast-forwards the scrub to the settle */
+document.querySelector('.skip-intro').addEventListener('click',()=>{
+  scrollTo({top:heroEl.offsetTop+heroEl.offsetHeight-innerHeight,behavior:'smooth'});
+});
+
 /* gated seeks, deadlock safe */
 let seekBusy=false,pendingTime=null;
 function requestSeek(t){
@@ -953,7 +967,9 @@ function applyHeroMode(){
   else enableScrub();
 }
 const MQLS=GATES.map(q=>matchMedia(q));
-MQLS.forEach(m=>m.addEventListener('change',applyHeroMode));
+/* older Safari MQLs lack addEventListener */
+function onMQ(m,fn){if(m.addEventListener)m.addEventListener('change',fn);else if(m.addListener)m.addListener(fn)}
+MQLS.forEach(m=>onMQ(m,applyHeroMode));
 /* some embedded browsers report a transient zero-size viewport at load and
    never fire the media query change events afterward, so re-apply on resize and load too */
 addEventListener('resize',applyHeroMode);
@@ -971,7 +987,7 @@ addEventListener('load',applyHeroMode);
     }
   }
   maybe();
-  MQLS.forEach(m=>m.addEventListener('change',maybe));
+  MQLS.forEach(m=>onMQ(m,maybe));
 })();
 
 /* reduced motion, live, both directions */
@@ -982,7 +998,7 @@ function pinToFinalStates(){
   ringsComplete(true);
 }
 function unpinFinalStates(){/* scroll drives own everything again; entrance observers re-fire as needed */}
-matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{
+onMQ(matchMedia('(prefers-reduced-motion: reduce)'),e=>{
   if(e.matches)pinToFinalStates();
   else applyHeroMode();
 });
@@ -1147,10 +1163,19 @@ if(matchMedia('(prefers-reduced-motion: reduce)').matches)pinToFinalStates();
   panel.querySelector('.qc-form').addEventListener('submit',function(e){
     e.preventDefault();
     const f=new FormData(this);
-    const body=encodeURIComponent('Please call me back.\nPhone: '+(f.get('phone')||'')+'\n\nAbout the tree:\n'+(f.get('details')||''));
+    const phone=(f.get('phone')||'').trim();
+    const ok=panel.querySelector('.qc-ok');
+    if(phone.replace(/\D/g,'').length<7){
+      ok.textContent='Add a call-back number first, or just call (716) 601-8275.';
+      ok.style.display='block';
+      this.querySelector('input[name="phone"]').focus();
+      return;
+    }
+    ok.style.display='';
+    const body=encodeURIComponent('Please call me back.\nPhone: '+phone+'\n\nAbout the tree:\n'+(f.get('details')||''));
     location.href='mailto:business@treecareofbuffalo.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
     panel.classList.add('sent');
-    panel.querySelector('.qc-ok').textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
+    ok.textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
   });
 })();
 
