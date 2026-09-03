@@ -106,7 +106,7 @@ export async function onRequestPost({ request, env }) {
     "About the tree:",
     f("details"),
     "",
-    `Photos to follow: ${f("photos") !== "" ? "yes" : "no"}`,
+    `Photos: ${f("photos-count") || "0"} selected on the form (they arrive by text)`,
     `Page: ${request.headers.get("referer") || "unknown"}`,
   ].filter((l) => l !== null).join("\n");
 

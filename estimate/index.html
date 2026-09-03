@@ -21,6 +21,7 @@
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/courier-prime-700-latin.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script>document.documentElement.className+=' js';</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://treecareofbuffalo.com/"}, {"@type": "ListItem", "position": 2, "name": "Get a Free Estimate", "item": "https://treecareofbuffalo.com/estimate/"}]}
 </script>
@@ -98,16 +99,17 @@
             <div class="field">
               <label for="f-photos">PHOTOS, IF YOU HAVE THEM (OPTIONAL)</label>
               <input id="f-photos" name="photos" type="file" accept="image/*" multiple>
-              <span class="form-foot">The form opens an email. Attach your photos there before you send, or text them to (716) 601-8275.</span>
+              <span class="form-foot">Photos help the estimate. Text them to (716) 601-8275 with your name, or attach them if your email app opens.</span>
             </div>
             <div class="field field-check">
               <input id="f-urgent" name="urgent" type="checkbox">
               <label for="f-urgent">This is storm damage / urgent</label>
             </div>
             <p class="urgent-note">Storm calls are answered anytime. If it's blocking a drive or on a structure, call instead.</p>
+            <div class="field cf-turnstile" data-sitekey="0x4AAAAAAEmTev2RNr9OIU_n" data-theme="dark" data-size="flexible" style="margin-top:22px"></div>
             <div class="field" style="margin-top:22px">
               <button class="btn glow" type="submit" data-label="Send my estimate request">Send my estimate request</button>
-              <span class="form-foot">Sends through your email app, addressed to business@treecareofbuffalo.com. We answer within one business day.</span>
+              <span class="form-foot">Goes straight to business@treecareofbuffalo.com. We answer within one business day.</span>
             </div>
           </form>
           <div class="form-success" tabindex="-1" aria-live="polite">

@@ -255,25 +255,52 @@
       if(!allOk){firstBad.focus();return}
       var v=function(n){return form.querySelector('[name="'+n+'"]').value.trim()};
       var isUrgent=urgent&&urgent.checked;
-      var body=[
-        (isUrgent?'URGENT / STORM DAMAGE':'Estimate request'),
-        '',
-        'Name: '+v('name'),
-        'Phone: '+v('phone'),
-        'Address / cross street: '+v('address'),
-        '',
-        'What is going on:',
-        v('details'),
-        '',
-        '(If you have photos of the tree, attach them to this email before sending.)'
-      ].join('\n');
-      var subject=(isUrgent?'URGENT tree work request':'Free estimate request')+' from '+v('name');
-      window.location.href='mailto:business@treecareofbuffalo.com?subject='+
-        encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-      track('form_submit',{urgent:!!isUrgent});
-      form.style.display='none';
-      var ok=form.parentElement.querySelector('.form-success');
-      if(ok){ok.classList.add('show');ok.focus()}
+      var okBox=form.parentElement.querySelector('.form-success');
+      function finish(direct){
+        if(direct&&okBox){
+          var h=okBox.querySelector('h3'),p=okBox.querySelector('p');
+          if(h)h.textContent='Request sent.';
+          if(p)p.textContent='It landed with us directly. We answer within one business day, sooner for storm calls. Photos help: text them to (716) 601-8275 with your name.';
+        }
+        form.style.display='none';
+        if(okBox){okBox.classList.add('show');okBox.focus()}
+      }
+      function mailtoSend(){
+        var body=[
+          (isUrgent?'URGENT / STORM DAMAGE':'Estimate request'),
+          '',
+          'Name: '+v('name'),
+          'Phone: '+v('phone'),
+          'Address / cross street: '+v('address'),
+          '',
+          'What is going on:',
+          v('details'),
+          '',
+          '(If you have photos of the tree, attach them to this email before sending.)'
+        ].join('\n');
+        var subject=(isUrgent?'URGENT tree work request':'Free estimate request')+' from '+v('name');
+        window.location.href='mailto:business@treecareofbuffalo.com?subject='+
+          encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+        track('form_submit',{urgent:!!isUrgent,path:'mailto'});
+        finish(false);
+      }
+      /* try the real endpoint first (Turnstile-protected Pages Function); fall back
+         to the honest mailto on any failure, so the form can never dead-end */
+      var ENDPOINT=/\.pages\.dev$/.test(location.hostname)?'/api/lead':'https://treecareofbuffalo.pages.dev/api/lead';
+      var fd;
+      try{fd=new FormData(form)}catch(err){mailtoSend();return}
+      var photoInput=form.querySelector('input[name="photos"]');
+      fd.delete('photos');
+      fd.append('photos-count',String(photoInput&&photoInput.files?photoInput.files.length:0));
+      var ctrl=('AbortController' in window)?new AbortController():null;
+      var timer=ctrl?setTimeout(function(){ctrl.abort()},8000):null;
+      fetch(ENDPOINT,{method:'POST',body:fd,signal:ctrl?ctrl.signal:undefined})
+        .then(function(r){
+          if(timer)clearTimeout(timer);
+          if(r.ok){track('form_submit',{urgent:!!isUrgent,path:'endpoint'});finish(true)}
+          else{mailtoSend()}
+        })
+        .catch(function(){if(timer)clearTimeout(timer);mailtoSend()});
     });
   }
 
