@@ -276,4 +276,22 @@
       if(ok){ok.classList.add('show');ok.focus()}
     });
   }
+
+  /* ---------- ambient video backgrounds: desktop, motion-ok, data-ok only ---------- */
+  (function(){
+    var els=d.querySelectorAll('[data-ambient]');
+    if(!els.length||reduce.matches)return;
+    if(navigator.connection&&navigator.connection.saveData)return;
+    if(!matchMedia('(min-width:861px)').matches)return;
+    Array.prototype.forEach.call(els,function(el){
+      var v=d.createElement('video');
+      v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;
+      v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('aria-hidden','true');
+      v.src=el.getAttribute('data-ambient');
+      el.appendChild(v);
+      el.classList.add('hasvid');
+      var p=v.play();
+      if(p&&p.catch)p.catch(function(){v.remove();el.classList.remove('hasvid')});
+    });
+  })();
 })();

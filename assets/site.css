@@ -100,6 +100,8 @@ h2{font-size:clamp(28px,3.6vw,42px);max-width:20ch}
 /* pagehead with footage backdrop */
 .pagehead{position:relative;padding:180px 0 96px;border-bottom:1px solid var(--line);overflow:hidden;background:var(--canvas)}
 .pagehead .bgimg{position:absolute;inset:0;background-size:cover;background-position:center 32%;background-repeat:no-repeat;transform-origin:50% 40%;animation:kenburns 46s var(--ease-soft) -8s infinite alternate}
+.pagehead .bgimg.hasvid{animation:none}
+.pagehead .bgimg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.07)}}
 .pagehead .bgveil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,26,18,.45) 0%,rgba(16,26,18,.72) 55%,rgba(16,26,18,.96) 100%)}
 .pagehead .wrap{position:relative}
