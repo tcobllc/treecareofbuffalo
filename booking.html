@@ -166,7 +166,10 @@
 document.getElementById('bookForm').addEventListener('submit',function(e){
   e.preventDefault();
   var f=new FormData(this);
-  var to='business@treecareofbuffalo.com';
+  /* TEMPORARY until the business@ mailbox exists (Google Workspace, ~Sep 4):
+     drafts composed to business@ bounce, and a real estimate request already
+     bounced this way. Revert to business@treecareofbuffalo.com once it receives. */
+  var to='akimbochop13@gmail.com';
   var subject=encodeURIComponent('Estimate request from '+(f.get('name')||'the website'));
   var body=encodeURIComponent(
     'Service: '+(f.get('service')||'Not sure yet')+'\n'+
