@@ -21,6 +21,8 @@ moody-atmospheric reskin (both were built and rejected).
   · `--mono: Courier Prime` (kickers, chips, nav, legal). All self-hosted latin woff2 in
   assets/fonts; no Google Fonts links (they cost ~700ms FCP and CLS).
 - Radius scale: 8-10px controls, 12-16px cards, 18-20px panels. Never pill-everything.
+- Header brand logo: 64px desktop, 52px under 560px, 44px under 360px (the 320px header
+  cannot hold 52 + phone + MENU + CTA without clipping).
 - Motion easing: `--ease: cubic-bezier(.22,.7,.24,1)`; ambient drift uses `--ease-soft`.
 
 ## 3. Light and imagery law
@@ -100,7 +102,7 @@ tools/predeploy.py).
 ## 9. Subpage layout law (2026-09-19)
 
 Every generated page (services/*, service-area/*, the hub) is a two-column `.page-grid`
-at >1060px: `.page-main` (prose column, 68ch) + `.rail` (sticky, top 112px). The rail is
+at >1060px: `.page-main` (prose column, 60ch: Cabin's wide zero makes 68ch run ~100 characters) + `.rail` (sticky, top 112px). The rail is
 one `.rail-card` (kicker TALK TO THE CREW, big phone link, hours line, four promise
 bullets, ghost estimate link) and one `.rail-fig` (a banked golden still with a mono
 caption). Rail figures rotate through the banked set so no two adjacent town pages share
