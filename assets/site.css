@@ -290,3 +290,58 @@ footer{border-top:1px solid var(--line);padding:56px 0 42px;position:relative;z-
 .svc h3 a{color:inherit;text-decoration:none;transition:color .25s var(--ease)}
 .svc h3 a:hover{color:var(--accent)}
 .svc h3 a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* ==== v1-ship: trust chips (were homepage-only inline), page rail, progressive motion ==== */
+.stats{display:flex;flex-direction:column;gap:18px;margin-top:34px}
+.stat{display:flex;gap:16px;align-items:baseline;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:18px 22px;opacity:.62;transform:translateX(10px);transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .5s var(--ease)}
+.stat.lit{opacity:1;transform:translateX(0);border-color:var(--accent-muted)}
+.stat b{font-family:var(--display);font-weight:400;font-size:20px;color:var(--accent);white-space:nowrap}
+.stat span{color:var(--text-secondary);font-size:15px}
+html:not(.js) .stat{opacity:1;transform:none}
+
+/* subpage two-column: prose + sticky call rail (fills the 1920 void, call stays primary) */
+.page-grid{display:grid;grid-template-columns:minmax(0,68ch) minmax(300px,380px);gap:72px;align-items:start}
+@media (max-width:1060px){.page-grid{grid-template-columns:1fr;gap:44px}}
+.rail{position:sticky;top:112px;display:flex;flex-direction:column;gap:20px}
+@media (max-width:1060px){.rail{position:static}}
+.rail-card{background:var(--panel);border:1px solid var(--line-strong);border-radius:18px;padding:28px 26px;position:relative;overflow:hidden}
+.rail-card::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 90% 55% at 80% 0%,rgba(232,150,58,.09) 0%,rgba(232,150,58,0) 60%);pointer-events:none}
+.rail-card>*{position:relative}
+.rail-card .kicker{margin-bottom:8px}
+.rail-phone{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:clamp(22px,2.2vw,28px);color:var(--text-primary);text-decoration:none;margin:4px 0 6px;transition:color .25s var(--ease)}
+.rail-phone:hover{color:var(--accent-hover)}
+.rail-phone svg{width:22px;height:22px;color:var(--accent);flex:none}
+.rail-sub{color:var(--text-secondary);font-size:15px}
+.rail-promises{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.rail-promises li{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--text-primary)}
+.rail-promises li::before{content:"";width:8px;height:8px;border-radius:50%;border:2px solid var(--accent);align-self:center;flex:none}
+.rail-card .btn{margin-top:20px;display:block;text-align:center}
+.rail-fig{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line-strong)}
+.rail-fig img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover;transition:transform 1.4s var(--ease)}
+.rail-fig:hover img{transform:scale(1.04)}
+.rail-fig figcaption{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--text-secondary);padding:10px 14px;border-top:1px solid var(--line);background:var(--panel)}
+@media (prefers-reduced-motion:reduce){.rail-fig:hover img{transform:none}}
+
+/* progressive enhancement: scroll-driven reveals where supported (JS reveal becomes a no-op) */
+@supports (animation-timeline: view()){
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .js .reveal .part{opacity:1;transform:none;transition:none;animation:rise .7s var(--ease) both;animation-timeline:view();animation-range:entry 0% entry 28%}
+  .js .reveal .part:nth-child(2){animation-range:entry 4% entry 32%}
+  .js .reveal .part:nth-child(3){animation-range:entry 8% entry 36%}
+  .js .reveal .part:nth-child(4){animation-range:entry 12% entry 40%}
+  .js .reveal .part:nth-child(5){animation-range:entry 16% entry 44%}
+  @media (prefers-reduced-motion:reduce){.js .reveal .part{animation:none}}
+}
+/* cross-document view transitions: a soft crossfade between pages, off for reduced motion */
+@view-transition{navigation:auto}
+@media (prefers-reduced-motion:reduce){@view-transition{navigation:none}}
+
+/* reserved height so the Turnstile widget mount never shifts the submit button */
+.field.cf-turnstile{min-height:65px}
+/* /service-area/ hub */
+.town-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+@media (max-width:560px){.town-grid{grid-template-columns:1fr}}
+.town-card{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;transition:border-color .25s var(--ease),transform .25s var(--ease)}
+.town-card:hover{border-color:var(--accent-muted);transform:translateY(-2px)}
+.town-card b{font-family:var(--display);font-weight:400;font-size:20px;color:var(--text-primary)}
+.town-card span{color:var(--text-secondary);font-size:15px}
