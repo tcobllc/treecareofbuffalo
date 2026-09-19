@@ -439,6 +439,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 42px;position:relative;z-
 @view-transition{navigation:auto}
 @media (prefers-reduced-motion:reduce){@view-transition{navigation:none}}
 summary:focus-visible{outline-offset:-4px}
+/* no JS: the scrub cannot run, so the static hero and the plain nav links carry the page */
+html:not(.js) .hero{display:none}html:not(.js) .static-hero{display:flex}
+@media (max-width:860px){html:not(.js) nav a.hideable{display:inline-flex;font-size:11px}html:not(.js) .navrow{flex-wrap:wrap}}
 .nav-call:active,.qc-fab:active,.menu-btn:active{transform:translateY(1px) scale(.98);transition-duration:.08s}
 @media (max-width:420px){.cue{display:none}}
 @media (max-width:480px){.svc a.callnow{font-size:12px;letter-spacing:.5px;padding:10px 12px;white-space:nowrap}}
@@ -885,6 +888,7 @@ new IntersectionObserver(es=>{heroOnScreen=es[0].isIntersecting},{rootMargin:'60
 /* the escape hatch: fast-forwards the scrub to the settle */
 document.querySelector('.skip-intro').addEventListener('click',()=>{
   scrollTo({top:heroEl.offsetTop+heroEl.offsetHeight-innerHeight,behavior:'smooth'});
+  this.style.display='none';
 });
 
 /* gated seeks, deadlock safe */

@@ -378,3 +378,8 @@ html:not(.js) .stat{opacity:1;transform:none}
 
 /* trust chips stack on phones so long lines read as sentences */
 @media (max-width:560px){.stat{flex-direction:column;gap:4px;align-items:flex-start}.stat b{white-space:normal}}
+
+/* no JS: plain nav links instead of the JS-built menu button */
+@media (max-width:860px){html:not(.js) nav a.hideable{display:inline-flex;font-size:11px}html:not(.js) .navrow{flex-wrap:wrap}}
+/* the Turnstile widget and the submit row span the form so nothing orphans in a column */
+.quote-form .cf-turnstile,.quote-form .field:has(button[type=submit]){grid-column:1/-1}

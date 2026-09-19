@@ -214,7 +214,7 @@
       name:{test:function(v){return v.trim().length>=2},msg:'Enter your name.'},
       phone:{test:function(v){return v.replace(/\D/g,'').length>=10},msg:'Enter a phone number with area code.'},
       address:{test:function(v){return v.trim().length>=3},msg:'Enter an address or the nearest cross street.'},
-      details:{test:function(v){return v.trim().length>=10},msg:'Tell us a little about the tree so the estimate is accurate.'}
+      details:{test:function(v){return v.trim().length>=10},msg:'Tell us a little about the tree.'}
     };
     function validateField(input){
       var rule=fields[input.name];
