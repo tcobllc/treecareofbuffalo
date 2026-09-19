@@ -375,3 +375,6 @@ html:not(.js) .stat{opacity:1;transform:none}
 /* the sticky bar must never cover the footer's legal line */
 @media (max-width:860px){footer{padding-bottom:110px}}
 @media (max-width:360px){.brand img{width:44px;height:44px}.nav-cta{font-size:9px;padding:8px 7px;letter-spacing:.3px}.navrow{gap:6px;padding:10px 10px}nav{gap:6px}}
+
+/* trust chips stack on phones so long lines read as sentences */
+@media (max-width:560px){.stat{flex-direction:column;gap:4px;align-items:flex-start}.stat b{white-space:normal}}
