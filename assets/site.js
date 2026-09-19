@@ -68,6 +68,7 @@
 
   /* ---------- quick-contact popup: an honest call-back panel, no fake chat presence ---------- */
   (function(){
+    if(location.pathname.indexOf('/estimate')===0)return; /* the estimate page IS the contact form */
     var fab=d.createElement('button');
     fab.className='qc-fab';
     fab.type='button';
@@ -262,7 +263,9 @@
         if(direct&&okBox){
           var h=okBox.querySelector('h3'),p=okBox.querySelector('p');
           if(h)h.textContent='Request sent.';
-          if(p)p.textContent='It landed with us directly. We answer within one business day, sooner for storm calls. Photos help: text them to (716) 601-8275 with your name.';
+          if(p)p.textContent='It landed with us directly. We reply within one business day and come look within a couple of days. Photos help: text them to (716) 601-8275 with your name.';
+          var ps=okBox.querySelectorAll('p');
+          if(ps[1])ps[1].textContent='Storm damage right now? Skip the wait and call (716) 601-8275.';
         }
         form.style.display='none';
         if(okBox){okBox.classList.add('show');okBox.focus()}
@@ -290,20 +293,28 @@
       /* try the real endpoint first (Turnstile-protected Pages Function); fall back
          to the honest mailto on any failure, so the form can never dead-end */
       var ENDPOINT=/\.pages\.dev$/.test(location.hostname)?'/api/lead':'https://treecareofbuffalo.pages.dev/api/lead';
-      var fd;
-      try{fd=new FormData(form)}catch(err){mailtoSend();return}
-      var photoInput=form.querySelector('input[name="photos"]');
-      fd.delete('photos');
-      fd.append('photos-count',String(photoInput&&photoInput.files?photoInput.files.length:0));
-      var ctrl=('AbortController' in window)?new AbortController():null;
-      var timer=ctrl?setTimeout(function(){ctrl.abort()},8000):null;
-      fetch(ENDPOINT,{method:'POST',body:fd,signal:ctrl?ctrl.signal:undefined})
-        .then(function(r){
-          if(timer)clearTimeout(timer);
-          if(r.ok){track('form_submit',{urgent:!!isUrgent,path:'endpoint'});finish(true)}
-          else{mailtoSend()}
-        })
-        .catch(function(){if(timer)clearTimeout(timer);mailtoSend()});
+      var tokenEl=form.querySelector('[name="cf-turnstile-response"]');
+      var waited=0;
+      submitBtn.disabled=true;
+      (function go(){
+        /* the Managed widget may still be minting its token; give it up to 4s */
+        if(tokenEl&&!tokenEl.value&&waited<4000){waited+=250;setTimeout(go,250);return}
+        var fd;
+        try{fd=new FormData(form)}catch(err){submitBtn.disabled=false;mailtoSend();return}
+        var photoInput=form.querySelector('input[name="photos"]');
+        fd.delete('photos');
+        fd.append('photos-count',String(photoInput&&photoInput.files?photoInput.files.length:0));
+        var ctrl=('AbortController' in window)?new AbortController():null;
+        var timer=ctrl?setTimeout(function(){ctrl.abort()},8000):null;
+        fetch(ENDPOINT,{method:'POST',body:fd,signal:ctrl?ctrl.signal:undefined})
+          .then(function(r){
+            if(timer)clearTimeout(timer);
+            submitBtn.disabled=false;
+            if(r.ok){track('form_submit',{urgent:!!isUrgent,path:'endpoint'});finish(true)}
+            else{mailtoSend()}
+          })
+          .catch(function(){if(timer)clearTimeout(timer);submitBtn.disabled=false;mailtoSend()});
+      })();
     });
   }
 

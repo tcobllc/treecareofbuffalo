@@ -33,7 +33,7 @@ body{background:var(--canvas);color:var(--text-primary);font-family:var(--body);
 @keyframes pagein{from{opacity:0}to{opacity:1}}
 img,svg,video{max-width:100%;display:block}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:fixed;top:-48px;left:16px;z-index:200;background:var(--accent);color:#1c1206;font-family:var(--mono);font-weight:700;padding:10px 16px;border-radius:0 0 8px 8px;text-decoration:none;transition:top .25s var(--ease)}
 .skip:focus-visible{top:0}
@@ -358,3 +358,20 @@ html:not(.js) .stat{opacity:1;transform:none}
 /* the file input's intrinsic width must never dictate a grid track (crushed the form on phones) */
 .quote-form .field,.cta-grid>*,.page-grid>*{min-width:0}
 .quote-form input[type=file]{width:100%;max-width:100%;min-width:0}
+
+/* ==== v1-ship polish from the verified audit ==== */
+.quote-form .field.field-check{flex-direction:row;align-items:center}
+.urgent-note{display:block;visibility:hidden;min-height:22px}
+.urgent-note.show{visibility:visible}
+@media (max-width:480px){.quote-form .err{min-height:40px}}
+.nav-call:active,.qc-fab:active,.menu-btn:active{transform:translateY(1px) scale(.98);transition-duration:.08s}
+/* Cabin's zero is wide: 68ch ran 95-114 characters per line; 60ch lands near 80 */
+.prose{max-width:60ch}
+@media (min-width:1061px){.page-grid{grid-template-columns:minmax(0,60ch) minmax(300px,380px)}}
+.lede{max-width:46ch}
+/* figure treatment parity: film vignette on prose figures like the services rows */
+.page-fig{position:relative}
+.page-fig::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 70px rgba(16,26,18,.45);pointer-events:none;border-radius:inherit}
+/* the sticky bar must never cover the footer's legal line */
+@media (max-width:860px){footer{padding-bottom:110px}}
+@media (max-width:360px){.brand img{width:44px;height:44px}.nav-cta{font-size:9px;padding:8px 7px;letter-spacing:.3px}.navrow{gap:6px;padding:10px 10px}nav{gap:6px}}

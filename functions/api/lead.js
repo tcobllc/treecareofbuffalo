@@ -129,5 +129,5 @@ export async function onRequestPost({ request, env }) {
   });
   if (!send.ok) return json(502, { ok: false, error: "mail send failed" }, origin);
 
-  return json(200, { ok: true });
+  return json(200, { ok: true }, origin);
 }
