@@ -7,7 +7,8 @@
 <meta name="description" content="Ten years in Buffalo's trees. Fully insured, straight talk, and yards left cleaner than we found them. Meet Tree Care of Buffalo.">
 <meta name="theme-color" content="#101a12">
 <link rel="canonical" href="https://treecareofbuffalo.com/why-us">
-<link rel="preload" as="image" href="/assets/hero-ending.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/hero-ending.jpg" fetchpriority="high" media="(min-width: 721px)">
+<link rel="preload" as="image" href="/assets/img/hero-ending-900.jpg" fetchpriority="high" media="(max-width: 720px)">
 <meta property="og:title" content="Why Us | Tree Care of Buffalo">
 <meta property="og:description" content="Ten years in the trees. Insured, honest, and tidy. Shaping Buffalo's trees with care and expertise.">
 <meta property="og:type" content="website">
@@ -40,7 +41,8 @@
 .ringwood [data-ringpath]{fill:none;stroke:currentColor;stroke-width:1.6;opacity:.9}
 .ringhint{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--text-secondary)}
 .stats{display:flex;flex-direction:column;gap:18px;margin-top:34px}
-.stat{display:flex;gap:16px;align-items:baseline;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:18px 22px;opacity:.35;transform:translateX(10px);transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .5s var(--ease)}
+.stat{display:flex;gap:16px;align-items:baseline;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:18px 22px;opacity:.62;transform:translateX(10px);transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .5s var(--ease)}
+html:not(.js) .stat{opacity:1;transform:none}
 .stat.lit{opacity:1;transform:translateX(0);border-color:var(--accent-muted)}
 .stat b{font-family:var(--display);font-weight:400;font-size:20px;color:var(--accent);white-space:nowrap}
 .stat span{color:var(--text-secondary);font-size:15px}
@@ -80,7 +82,7 @@
 <main id="main" tabindex="-1">
 
   <div class="pagehead">
-    <div class="bgimg" style="background-image:url('assets/hero-ending.jpg');background-position:center 60%" aria-hidden="true"></div>
+    <div class="bgimg bg-ending" aria-hidden="true"></div>
     <div class="bgveil" aria-hidden="true"></div>
     <div class="wrap">
       <div class="ph-grid">

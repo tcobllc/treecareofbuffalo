@@ -77,13 +77,36 @@ scanner. Everything else it flags high gets fixed before deploy.
 - Response promise next to CTAs and mean it (call-back within one business day).
 - The estimate is the price; pay on completion; cleanup included. Say it near every ask.
 - When real reviews exist: dated quotes beside the estimate form, never fabricated.
-- The form stays honest mailto until the Cloudflare Function endpoint has keys
-  (functions/api/lead.js is scaffolded and env-gated; see its header for setup).
+- The estimate form POSTs to the Cloudflare Pages Function (functions/api/lead.js:
+  Turnstile Managed widget + Resend, secrets in both Pages environments, CORS for the
+  GitHub Pages origin) and falls back to mailto on any failure. Leads deliver to the
+  owner's Gmail until the domain is verified at Resend (October, with DNS control).
+- Call-primary applied 2026-09-19: every CTA pair is phone (amber .btn) first, estimate
+  (.btn.ghost) second: hero settle, static hero, homepage banner, service rows, all
+  page closers, and the sticky rail on every generated page.
 
 ## 8. Structure
 
-16 indexable pages: home, services hub + 5 service pages, why-us, faq, 8 town pages,
-estimate, privacy (+ reviews page held out of sitemap until real reviews, booking.html
-redirect stub, styled 404). Absolute canonicals on treecareofbuffalo.com. Schema:
-HomeAndConstructionBusiness @id #business + FAQPage on home; Service + BreadcrumbList on
-subpages. Head-term titles: "Tree Service in {Place}, NY | Tree Care of Buffalo".
+20 indexable pages: home, services hub + 5 service pages, /service-area/ hub + 8 town
+pages, why-us, faq, estimate, privacy (+ reviews page noindex and out of the sitemap
+until real reviews exist; booking.html and services/index.html redirect stubs; styled
+404). Clean URLs (no .html), absolute canonicals on treecareofbuffalo.com. Schema:
+HomeAndConstructionBusiness @id #business (name "Tree Care of Buffalo", legalName with
+LLC, openingHoursSpecification, City objects) + FAQPage on home; Service + BreadcrumbList
+on subpages, breadcrumb schema count must equal the visible crumbs (gated). Head-term
+titles 30-70 chars, descriptions <= 160, sitemap lastmod per file (all gated by
+tools/predeploy.py).
+
+## 9. Subpage layout law (2026-09-19)
+
+Every generated page (services/*, service-area/*, the hub) is a two-column `.page-grid`
+at >1060px: `.page-main` (prose column, 68ch) + `.rail` (sticky, top 112px). The rail is
+one `.rail-card` (kicker TALK TO THE CREW, big phone link, hours line, four promise
+bullets, ghost estimate link) and one `.rail-fig` (a banked golden still with a mono
+caption). Rail figures rotate through the banked set so no two adjacent town pages share
+one. Service page H1s carry the city ("Tree Removal in Buffalo"); prose runs 650-750
+words on service pages and 450-520 on town pages, each town section built on a different
+organizing device so the pages never read as copies. Below 1060px the rail stacks under
+the prose. Progressive motion on site.css pages: scroll-driven reveals under
+`@supports (animation-timeline: view())` (the JS reveal becomes a no-op there) and
+cross-document `@view-transition` crossfades; both off under reduced motion.

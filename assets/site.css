@@ -345,3 +345,8 @@ html:not(.js) .stat{opacity:1;transform:none}
 .town-card:hover{border-color:var(--accent-muted);transform:translateY(-2px)}
 .town-card b{font-family:var(--display);font-weight:400;font-size:20px;color:var(--text-primary)}
 .town-card span{color:var(--text-secondary);font-size:15px}
+
+/* pagehead backdrops as classes so phones get the 900px encode */
+.pagehead .bg-canopy{background-image:url(/assets/img/canopy-amber-1600.jpg);background-position:center 45%}
+.pagehead .bg-ending{background-image:url(/assets/hero-ending.jpg);background-position:center 60%}
+@media (max-width:720px){.pagehead .bg-canopy{background-image:url(/assets/img/canopy-amber-900.jpg)}.pagehead .bg-ending{background-image:url(/assets/img/hero-ending-900.jpg)}}
