@@ -1,0 +1,23 @@
+# Weekly outbound link check with lychee (lycheeverse, Apache-2.0 OR MIT). Scheduled workflows
+# only run on the default branch, so this activates when the branch merges; run it by hand
+# from the Actions tab before then. Internal links are already covered on every push by
+# tools/linkcheck.py inside gates.yml; this one follows the links that leave the site.
+name: links
+on:
+  schedule:
+    - cron: "17 9 * * 1"
+  workflow_dispatch:
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress --timeout 20 --max-retries 2
+            --exclude "challenges.cloudflare.com" --exclude "^mailto:" --exclude "^tel:" --exclude "^sms:"
+            --exclude "treecareofbuffalo.pages.dev"
+            "**/*.html"
+          fail: true
