@@ -1,0 +1,24 @@
+# Deterministic gates on every push: predeploy.py, html-validate, head order (capo.js), internal
+# links, axe-core. Same scripts as the local gate (tools/gate.py), run on headless Chromium.
+# Costs nothing on a public repo; needs no secrets. Outbound-link crawling (lychee or linkinator
+# with --external) is deliberately not here: see build/STACK-UPGRADE-2026-10.md for the nightly job.
+name: gates
+on:
+  push:
+  pull_request:
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci --no-audit --no-fund
+      - run: pip install "playwright>=1.47" axe-playwright-python==0.1.8
+      - run: python -m playwright install --with-deps chromium
+      - run: python tools/gate.py --browser chromium

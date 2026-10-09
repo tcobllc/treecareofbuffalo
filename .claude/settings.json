@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import os,runpy;runpy.run_path(os.path.join(os.environ['CLAUDE_PROJECT_DIR'],'tools','hook_gate.py'))\"",
+            "timeout": 180
+          }
+        ]
+      }
+    ]
+  }
+}
