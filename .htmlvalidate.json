@@ -1,0 +1,9 @@
+{
+  "$schema": "https://html-validate.org/schemas/config.json",
+  "extends": ["html-validate:recommended", "html-validate:a11y"],
+  "rules": {
+    "tel-non-breaking": "off",
+    "no-inline-style": "off",
+    "void-style": "off"
+  }
+}

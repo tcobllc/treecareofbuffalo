@@ -1,0 +1,15 @@
+{
+  "name": "treecareofbuffalo-site",
+  "private": true,
+  "description": "Static site for Tree Care of Buffalo. No build step; these packages are the deterministic gates (tools/gate.py).",
+  "scripts": {
+    "gate": "python tools/gate.py",
+    "gate:quick": "python tools/gate.py --quick",
+    "validate": "html-validate \"**/*.html\""
+  },
+  "devDependencies": {
+    "@rviscomi/capo.js": "2.3.1",
+    "html-validate": "11.16.2",
+    "linkinator": "8.1.0"
+  }
+}
