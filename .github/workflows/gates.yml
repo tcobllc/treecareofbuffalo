@@ -3,9 +3,7 @@
 # Costs nothing on a public repo; needs no secrets. Outbound-link crawling (lychee or linkinator
 # with --external) is deliberately not here: see build/STACK-UPGRADE-2026-10.md for the nightly job.
 name: gates
-on:
-  push:
-  workflow_dispatch:
+on: [push, workflow_dispatch]
 jobs:
   gates:
     runs-on: ubuntu-latest
