@@ -69,8 +69,7 @@
       e.preventDefault();
       var f=new FormData(this);
       var body=encodeURIComponent('Please call me back.\nPhone: '+(f.get('phone')||'')+'\n\nAbout the tree:\n'+(f.get('details')||''));
-      /* TEMPORARY compose target until business@ receives (see booking.html note) */
-      location.href='mailto:akimbochop13@gmail.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
+      location.href='mailto:business@treecareofbuffalo.com?subject='+encodeURIComponent('Call-back request from the website')+'&body='+body;
       panel.classList.add('sent');
       panel.querySelector('.qc-ok').textContent="Your email app should have opened. Send that and we'll call you back within one business day. In a hurry? (716) 601-8275.";
     });
