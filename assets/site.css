@@ -6,7 +6,6 @@
 
 /* Tree Care of Buffalo, shared design system for all pages */
 /* design tokens, generated 2026-10-09 by build/design-system/palette.py in the TCOB,LLC repo; edit the generator, not this block */
-/* design tokens, generated 2026-10-09 by build/design-system/palette.py in the TCOB,LLC repo; edit the generator, not this block */
 :root{
   --surface:#0f1a13; --surface-raised:#15261b; --surface-overlay:#1c3123; --border:#2d4033; --border-strong:#4a6152; --border-input:#526a5a; --text:#f5ebd6; --text-muted:#cbbc9d; --text-muted-strong:#e3d6bc; --text-faint:#ada085; --ink:#170d05; --accent:#e8963a; --accent-text:#f1ae6b; --accent-hover:#f1ae6b; --accent-muted:#764505; --gold:#e9a825; --gold-soft:#f8d192; --link:#e8963a; --link-hover:#f1ae6b; --focus:#e8963a; --danger:#ffa190; --danger-border:#dc2003; --success:#a0caad; --warning:#e8b45c; --selection-bg:#e8963a; --selection-text:#170d05; --night:#040906;
   --night-rgb:4 9 6; --accent-rgb:232 150 58; --surface-rgb:15 26 19; --accent-muted-rgb:118 69 5; --border-strong-rgb:74 97 82;

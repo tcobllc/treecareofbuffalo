@@ -10,13 +10,16 @@ A golden-hour film about people who work in trees: deep pine darkness, warm ambe
 woodcut type, foreman's voice. Evolution of the live v1 world; never a white-editorial or
 moody-atmospheric reskin (both were built and rejected).
 
-## 2. Tokens (the source of truth is assets/site.css `:root`; index.html mirrors inline)
+## 2. Tokens (generated: the source of truth is `build/design-system/palette.py` in the TCOB,LLC repo; `apply_to_site.py` writes the `:root` block into assets/site.css and index.html, and routes the other pages' inline styles through it. Never hand-edit a hex here or in the stylesheet.)
 
-- `--canvas: #101a12` deep pine (page ground, never pure black)
-- `--panel: #182619` / `--panel-2: #1e2f20` raised surfaces
-- `--line: #2b3d2c` / `--line-strong: #4a6046` hairlines
-- `--accent: #e8963a` amber gold (CTAs, kickers, rings) / hover `#f3a94e` / muted `#7a5a28`
-- `--text-primary: #f3e6c9` warm cream / `--text-secondary: #c4b598`
+- `--surface: #0f1a13` deep pine (page ground, never pure black); `--surface-raised: #15261b`, `--surface-overlay: #1c3123`
+- `--border: #2d4033` / `--border-strong: #4a6152` hairlines (decorative); `--border-input: #526a5a` for input and control boundaries (3.03:1)
+- `--accent: #e8963a` amber (CTA fills, kickers, icons, halo) / `--accent-hover: #f1ae6b` / `--accent-muted: #764505` / `--accent-text: #f1ae6b` for amber text below 24px
+- `--text: #f5ebd6` cream / `--text-muted: #cbbc9d` / `--text-muted-strong: #e3d6bc` (secondary copy that must read fluently) / `--text-faint: #ada085` (placeholders only) / `--ink: #170d05` text on amber
+- `--gold: #e9a825` jewelry only; `--focus: #e8963a`; `--danger: #ffa190` / `--danger-border: #dc2003`; `--success: #a0caad`; `--warning: #e8b45c`; `--selection-bg` / `--selection-text`
+- Alpha colors: `rgb(var(--night-rgb) / a)` for scrims and shadows, `rgb(var(--accent-rgb) / a)`, `rgb(var(--surface-rgb) / a)`, `rgb(var(--accent-muted-rgb) / a)`, `rgb(var(--border-strong-rgb) / a)`; never a literal rgba()
+- v1 aliases still resolve (`--canvas`, `--panel`, `--panel-2`, `--line`, `--line-strong`, `--text-primary`, `--text-secondary`); new rules use the new names. Every text pair's WCAG and APCA numbers: `build/design-system/contrast.md`
+- Type scale: `--step--2` (12px) to `--step-6`, fluid 320 to 1440px; line heights `--lh-*`, tracking `--track-*`, measures `--measure-*`, space `--space-*`
 - Type: `--display: Bevan` (woodcut serif, headings only) · `--body: Cabin` (400-700 variable)
   · `--mono: Courier Prime` (kickers, chips, nav, legal). All self-hosted latin woff2 in
   assets/fonts; no Google Fonts links (they cost ~700ms FCP and CLS).

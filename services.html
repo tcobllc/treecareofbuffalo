@@ -9,10 +9,10 @@
 <script>document.documentElement.className+=' js';</script>
 <link rel="stylesheet" href="assets/site.css">
 <style>
-.storm{border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgba(232,150,58,.10),rgba(232,150,58,.02))}
+.storm{border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgb(var(--accent-rgb) / .10),rgb(var(--accent-rgb) / .02))}
 .storm .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:20px;padding-top:26px;padding-bottom:26px}
 .storm .bolt{width:38px;height:38px;color:var(--accent);flex:none;animation:boltpulse 4.4s var(--ease-soft) -1.2s infinite}
-@keyframes boltpulse{0%,100%{opacity:.75}50%{opacity:1;filter:drop-shadow(0 0 12px rgba(232,150,58,.7))}}
+@keyframes boltpulse{0%,100%{opacity:.75}50%{opacity:1;filter:drop-shadow(0 0 12px rgb(var(--accent-rgb) / .7))}}
 .storm p{font-size:17px;max-width:none}
 .storm b{font-family:var(--mono);letter-spacing:1px}
 .storm .btn{margin-left:auto}
@@ -24,8 +24,8 @@
 .svc-photo{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line-strong);margin:0}
 .svc-photo img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;transition:transform 1.4s var(--ease)}
 .svc-photo:hover img{transform:scale(1.05)}
-.svc-photo::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 70px rgba(16,26,18,.5);pointer-events:none}
-.iconbadge{position:absolute;left:16px;bottom:16px;width:62px;height:62px;background:rgba(12,18,12,.72);border:1px solid var(--accent-muted);border-radius:14px;display:grid;place-items:center;backdrop-filter:blur(8px);z-index:1}
+.svc-photo::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 70px rgb(var(--surface-rgb) / .5);pointer-events:none}
+.iconbadge{position:absolute;left:16px;bottom:16px;width:62px;height:62px;background:rgb(var(--surface-rgb) / .72);border:1px solid var(--accent-muted);border-radius:14px;display:grid;place-items:center;backdrop-filter:blur(8px);z-index:1}
 .iconbadge svg{width:58%;height:58%;color:var(--accent)}
 .svc-list{margin:22px 0 28px;display:flex;flex-direction:column;gap:12px;list-style:none}
 .svc-list li{display:flex;gap:14px;align-items:baseline;color:var(--text-secondary);font-size:16px}
