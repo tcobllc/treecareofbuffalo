@@ -29,10 +29,22 @@ def main():
     a = ap.parse_args()
     from playwright.sync_api import sync_playwright
     from axe_playwright_python.sync_playwright import Axe
-    pages = [os.path.relpath(os.path.abspath(p), ROOT) for p in a.pages] or all_pages()
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    pages = []
+    for p in a.pages:
+        try:
+            rel = os.path.relpath(os.path.abspath(p), ROOT)
+        except ValueError:
+            rel = ".."
+        if rel.startswith(".."):
+            print(f"not inside the repo, skipped: {p}"); continue
+        pages.append(rel)
+    pages = pages or all_pages()
     class Quiet(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *x, **k): super().__init__(*x, directory=ROOT, **k)
         def log_message(self, *x, **k): pass
+        def handle_error(self, *x, **k): pass
     srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Quiet)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     port = srv.server_address[1]

@@ -10,6 +10,8 @@
 # and axe-playwright-python, Node 22+ with `npm install` done once (package.json pins the versions).
 import argparse, os, shutil, subprocess, sys, time
 
+if hasattr(sys.stdout, "reconfigure"):   # Windows consoles default to cp1252; tool output carries check marks and arrows
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace"); sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PY = sys.executable
 # Call the JS entry points through node, not the .cmd shims: cmd.exe splits this repo's path on the
@@ -19,7 +21,7 @@ HTML_VALIDATE = os.path.join(ROOT, "node_modules", "html-validate", "bin", "html
 
 def run(label, cmd, cwd=ROOT):
     t = time.time()
-    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace", env={**os.environ, "PYTHONUTF8": "1"})
     out = (r.stdout or "") + (r.stderr or "")
     ok = r.returncode == 0
     print(f"[{'PASS' if ok else 'FAIL'}] {label} ({time.time() - t:.1f}s)")

@@ -35,6 +35,7 @@ def main():
     class Quiet(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *x, **k): super().__init__(*x, directory=ROOT, **k)
         def log_message(self, *x, **k): pass
+        def handle_error(self, *x, **k): pass
     srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Quiet)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     port = srv.server_address[1]

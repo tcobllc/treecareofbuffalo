@@ -16,7 +16,7 @@ jobs:
       - uses: lycheeverse/lychee-action@v2
         with:
           args: >-
-            --no-progress --timeout 20 --max-retries 2
+            --no-progress --timeout 20 --max-retries 2 --root-dir .
             --exclude "challenges.cloudflare.com" --exclude "^mailto:" --exclude "^tel:" --exclude "^sms:"
             --exclude "treecareofbuffalo.pages.dev"
             "**/*.html"

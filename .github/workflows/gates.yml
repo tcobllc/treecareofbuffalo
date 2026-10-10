@@ -5,7 +5,7 @@
 name: gates
 on:
   push:
-  pull_request:
+  workflow_dispatch:
 jobs:
   gates:
     runs-on: ubuntu-latest
