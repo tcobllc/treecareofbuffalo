@@ -84,10 +84,10 @@ scanner. Everything else it flags high gets fixed before deploy.
 - When real reviews exist: dated quotes beside the estimate form, never fabricated.
 - The estimate form POSTs to the Cloudflare Pages Function (functions/api/lead.js:
   Turnstile Managed widget + Resend, secrets in both Pages environments, CORS for the
-  GitHub Pages origin) and falls back to mailto on any failure. The mailto fallbacks
-  target business@treecareofbuffalo.com (a live Workspace mailbox since 2026-10-10);
-  endpoint leads still deliver to the Resend account owner's address until the domain
-  is verified at Resend (DNS records at Wix, no longer gated on the October move).
+  GitHub Pages origin) and falls back to mailto on any failure. Since 2026-10-10 leads
+  deliver to business@treecareofbuffalo.com (Workspace) from leads@treecareofbuffalo.com
+  (domain verified at Resend; DKIM, send/rsend CNAMEs and DMARC live at Wix DNS), and
+  the mailto fallbacks target business@ as well.
 - Call-primary applied 2026-09-19: every CTA pair is phone (amber .btn) first, estimate
   (.btn.ghost) second: hero settle, static hero, homepage banner, service rows, all
   page closers, and the sticky rail on every generated page.

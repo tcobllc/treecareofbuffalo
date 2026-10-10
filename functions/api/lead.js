@@ -7,9 +7,8 @@
  * To activate (owner steps, ~10 minutes):
  *   1. Cloudflare dashboard > Turnstile > Add site: treecareofbuffalo.com and
  *      *.treecareofbuffalo.pages.dev (invisible widget). Copy sitekey + secret.
- *   2. resend.com > API key. Until treecareofbuffalo.com is verified at Resend
- *      (DNS records at Wix, editable today) the sender must be onboarding@resend.dev;
- *      after verification switch FROM below to leads@treecareofbuffalo.com.
+ *   2. resend.com > API key, and the domain verified under Domains (done 2026-10-10;
+ *      its DKIM/CNAME/DMARC records live at Wix DNS). FROM is leads@treecareofbuffalo.com.
  *   3. From the repo root:
  *        npx wrangler pages secret put TURNSTILE_SECRET --project-name=treecareofbuffalo
  *        npx wrangler pages secret put RESEND_API_KEY  --project-name=treecareofbuffalo
@@ -19,15 +18,10 @@
  *      existing success/failure UI. Keep mailto as the catch fallback.
  */
 
-/* Resend's unverified tier only delivers to the Resend account owner's address,
-   so DEST must stay on that address until the domain is verified at Resend.
-   business@treecareofbuffalo.com has been a live Workspace mailbox since
-   2026-10-10 and Wix DNS is editable now, so this no longer waits for the
-   October domain move. NEXT STEP: add treecareofbuffalo.com at resend.com/domains,
-   put its DNS records in at Wix, then set DEST to business@treecareofbuffalo.com
-   and FROM to leads@treecareofbuffalo.com. */
-const DEST = "akimbochop13@gmail.com";
-const FROM = "onboarding@resend.dev";
+/* treecareofbuffalo.com verified at Resend on 2026-10-10 (DKIM, send/rsend CNAMEs
+   and DMARC at Wix DNS). Leads deliver to the Workspace mailbox from leads@. */
+const DEST = "business@treecareofbuffalo.com";
+const FROM = "leads@treecareofbuffalo.com";
 
 /* The live site is served by GitHub Pages at treecareofbuffalo.com, so the form
    POSTs here cross-origin. Allow the production hosts plus the Cloudflare branch
