@@ -113,7 +113,8 @@
               <label for="f-urgent">This is storm damage / urgent</label>
             </div>
             <p class="urgent-note">Storm calls are answered anytime. If it's blocking a drive or on a structure, call instead.</p>
-            <div class="field cf-turnstile" data-sitekey="0x4AAAAAAEmTev2RNr9OIU_n" data-theme="dark" data-size="flexible" style="margin-top:22px"></div>
+            <div class="field cf-turnstile" data-sitekey="0x4AAAAAAEmTev2RNr9OIU_n" data-theme="dark" data-size="flexible" data-error-callback="tcobTurnstileError" style="margin-top:22px"></div>
+            <span class="err" id="f-human-err" aria-live="polite"></span>
             <div class="field" style="margin-top:22px">
               <button class="btn glow" type="submit" data-label="Send my estimate request">Send my estimate request</button>
               <span class="form-foot">Goes straight to the crew. We reply within one business day and come look within a couple of days.</span>
