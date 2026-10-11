@@ -2,6 +2,8 @@
 (function(){
   'use strict';
   var d=document;
+  /* named in the estimate form's data-error-callback; global so Turnstile finds it */
+  window.tcobTurnstileError=function(){window.tcobTurnstileBroken=true};
   window.dataLayer=window.dataLayer||[];
   function track(ev,extra){var o={event:ev};if(extra)for(var k in extra)o[k]=extra[k];window.dataLayer.push(o);}
 
@@ -290,14 +292,29 @@
         finish(false);
       }
       /* try the real endpoint first (Turnstile-protected Pages Function); fall back
-         to the honest mailto on any failure, so the form can never dead-end */
+         to the honest mailto when the endpoint is unreachable or broken, so the form
+         can never dead-end. A missing or rejected human check is not a breakage: ask
+         for the checkbox instead of throwing the visitor into their mail app. */
       var ENDPOINT=/\.pages\.dev$/.test(location.hostname)?'/api/lead':'https://treecareofbuffalo.pages.dev/api/lead';
       var tokenEl=form.querySelector('[name="cf-turnstile-response"]');
+      var humanErr=form.querySelector('#f-human-err');
+      /* a widget that errored (blocked, outage, wrong host) can never be ticked, so
+         treat it as absent and let the mailto fallback carry the request */
+      var hasTs=!!(tokenEl&&window.turnstile&&!window.tcobTurnstileBroken);
+      function askHuman(msg){
+        submitBtn.disabled=false;
+        if(humanErr)humanErr.textContent=msg;
+        var w=form.querySelector('.cf-turnstile');
+        if(w&&w.scrollIntoView)w.scrollIntoView({block:'center',behavior:'smooth'});
+      }
+      if(humanErr)humanErr.textContent='';
       var waited=0;
       submitBtn.disabled=true;
       (function go(){
         /* the Managed widget may still be minting its token; give it up to 4s */
         if(tokenEl&&!tokenEl.value&&waited<4000){waited+=250;setTimeout(go,250);return}
+        /* still no token with the widget loaded means it wants the checkbox ticked */
+        if(hasTs&&!tokenEl.value){askHuman('Tick "Verify you are human" above, then send again.');return}
         var fd;
         try{fd=new FormData(form)}catch(err){submitBtn.disabled=false;mailtoSend();return}
         var photoInput=form.querySelector('input[name="photos"]');
@@ -309,8 +326,15 @@
           .then(function(r){
             if(timer)clearTimeout(timer);
             submitBtn.disabled=false;
-            if(r.ok){track('form_submit',{urgent:!!isUrgent,path:'endpoint'});finish(true)}
-            else{mailtoSend()}
+            if(r.ok){track('form_submit',{urgent:!!isUrgent,path:'endpoint'});finish(true);return}
+            return r.json().catch(function(){return {}}).then(function(j){
+              if(hasTs&&/turnstile/.test(j&&j.error||'')){
+                /* token missing, expired or rejected: mint a fresh one and ask again */
+                try{turnstile.reset()}catch(err){}
+                askHuman('That check expired. Tick "Verify you are human" again, then send.');
+              }
+              else{mailtoSend()}
+            });
           })
           .catch(function(){if(timer)clearTimeout(timer);submitBtn.disabled=false;mailtoSend()});
       })();
